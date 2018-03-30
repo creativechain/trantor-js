@@ -1,0 +1,33 @@
+{
+  "name": "trantor-js",
+  "version": "0.0.1",
+  "description": "Creativechain Trantor Lib for JS",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/creativechain/trantor-js.git"
+  },
+  "keywords": [
+    "trantor",
+    "creativechain",
+    "cretivecoin",
+    "blockchain",
+    "tx",
+    "coin",
+    "altcoin",
+    "writer"
+  ],
+  "author": "Creativechain",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/creativechain/trantor-js/issues"
+  },
+  "homepage": "https://github.com/creativechain/trantor-js#readme",
+  "dependencies": {
+    "lzma": "^2.3.2",
+    "varint": "^5.0.0"
+  }
+}
