@@ -18,6 +18,17 @@ console.log(bufferData.toString('hex'));
 
 ```
 
+#### Deserialization
+```js
+let {Content} = require("trantor-js");
+let {Author, ContentData} = Content;
+
+let bufferData = Buffer.from('01000271686f1f3c14aa547b824091445ab99fabc56928046e69636b11656d61696c406578616d706c652e636f6d0b6578616d706c652e636f6d0b6465736372697074696f6e092f495046532f434944085b2274616773225d', 'hex');
+
+let author = ContentData.deserialize(bufferData);
+console.log(author); //Must be a Author Object
+```
+
 #### License
 ```
     GNU GPLv3
