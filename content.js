@@ -54,6 +54,61 @@ ContentData.prototype.__deserialize = function(buffer, offset) {
 
 /**
  *
+ * @param {Buffer} data
+ * @return {ContentData}
+ */
+ContentData.deserialize = function(data) {
+    let buffer = data;
+
+    let type = parseInt(buffer.slice(2, 3).toString('hex'), 16);
+
+    let contentData = null;
+    switch (type) {
+        case Constants.TYPE.CONTENT:
+            contentData = new MediaData();
+            break;
+        case Constants.TYPE.USER:
+            contentData = new Author();
+            break;
+        case Constants.TYPE.LIKE:
+            contentData = new Like();
+            break;
+        case Constants.TYPE.UNLIKE:
+            contentData = new Unlike();
+            break;
+        case Constants.TYPE.PAYMENT:
+            contentData = new Payment();
+            break;
+        case Constants.TYPE.COMMENT:
+            contentData = new Comment();
+            break;
+        case Constants.TYPE.DONATION:
+            contentData = new Donation();
+            break;
+        case Constants.TYPE.FOLLOW:
+            contentData = new Follow();
+            break;
+        case Constants.TYPE.UNFOLLOW:
+            contentData = new Unfollow();
+            break;
+        case Constants.TYPE.BLOCK:
+            contentData = new BlockContent();
+            break;
+        case Constants.TYPE.INDEX:
+            contentData = new Index();
+            break;
+    }
+
+    if (contentData) {
+        contentData.deserialize(buffer, 0);
+        return contentData;
+    }
+
+    return null;
+};
+
+/**
+ *
  * @type {TrantorNetwork}
  */
 ContentData.NETWORK = TrantorNetwork.MAINNET;
