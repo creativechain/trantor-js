@@ -420,7 +420,7 @@ Payment.prototype.serialize = function() {
  * @returns {number}
  */
 Payment.prototype.deserialize = function(buffer, offset) {
-    offset = super.deserialize(buffer, offset);
+    offset = this.__deserialize(buffer, offset);
     this.author = buffer.slice(offset, offset + 20);
     this.author =  creativecoin.address.toBase58Check(this.author, ContentData.NETWORK.pubKeyHash);
     offset += 20;
@@ -509,7 +509,7 @@ Donation.prototype.serialize = function() {
  * @returns {number}
  */
 Donation.prototype.deserialize = function(buffer, offset) {
-    offset = super.deserialize(buffer, offset);
+    offset = this.__deserialize(buffer, offset);
     this.author = buffer.slice(offset, offset + 20);
     this.author =  creativecoin.address.toBase58Check(this.author, ContentData.NETWORK.pubKeyHash);
     offset += 20;
@@ -548,7 +548,7 @@ AddressRelation.prototype.serialize = function() {
  * @returns {number}
  */
 AddressRelation.prototype.deserialize = function(buffer, offset) {
-    offset = super.deserialize(buffer, offset);
+    offset = this.__deserialize(buffer, offset);
     this.followerAddress = buffer.slice(offset, offset + 20);
     this.followerAddress =  creativecoin.address.toBase58Check(this.followerAddress, ContentData.NETWORK.pubKeyHash);
     offset += 20;
