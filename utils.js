@@ -2,7 +2,7 @@
 let Buffer = require('safe-buffer').Buffer;
 let varint = require('varint');
 
-let DataUtils = {};
+let Utils = {};
 
 /**
  *
@@ -10,7 +10,7 @@ let DataUtils = {};
  * @param {number} length
  * @return {string}
  */
-DataUtils.serializeNumber = function (number, length) {
+Utils.serializeNumber = function (number, length) {
     let numberHex = number.toString(16);
     let pairChars = numberHex.length % 2 === 0;
 
@@ -32,7 +32,7 @@ DataUtils.serializeNumber = function (number, length) {
 /**
  * @param {string} text
  */
-DataUtils.serializeText = function(text) {
+Utils.serializeText = function(text) {
     if (text && text.length > 0) {
         let textHex = Buffer.from(text, 'utf8').toString('hex');
         let textBuffer = Buffer.from(textHex, 'hex');
@@ -49,7 +49,7 @@ DataUtils.serializeText = function(text) {
  * @param {number} offset
  * @return {{text: String, offset: Number|number}}
  */
-DataUtils.deserializeText = function(buffer, offset) {
+Utils.deserializeText = function(buffer, offset) {
     let varInt = varint.decode(buffer, offset);
     offset += varint.decode.bytes;
     let textHex = buffer.slice(offset, offset + varInt).toString('hex');
@@ -61,8 +61,12 @@ DataUtils.deserializeText = function(buffer, offset) {
     }
 };
 
+Utils.inherit = function(child, parent) {
+    child.prototype = Object.create(parent.prototype, )
+};
+
 if (module) {
     module.exports = {
-        DataUtils: DataUtils
+        Utils: Utils
     }
 }

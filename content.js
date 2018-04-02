@@ -1,6 +1,6 @@
 
 let {Constants} = require('./constants');
-let {DataUtils} = require('./data-utils');
+let {Utils} = require('./utils');
 let {TrantorNetwork} = require('./network');
 let Buffer = require('safe-buffer').Buffer;
 let varint = require('varint');
@@ -122,9 +122,11 @@ function Index(txIds) {
     this.txIds = txIds;
 }
 
+Utils.inherit(Index, ContentData);
+
 Index.prototype.serialize = function() {
-    let bufferHex = DataUtils.serializeNumber(this.version);
-    bufferHex += DataUtils.serializeNumber(this.type);
+    let bufferHex = Utils.serializeNumber(this.version);
+    bufferHex += Utils.serializeNumber(this.type);
 
     bufferHex += Buffer.from(varint.encode(this.txIds.length)).toString('hex');
 
@@ -183,22 +185,24 @@ function Author(address, nick, email, web, description, avatar, tags) {
     this.tags = tags ? tags : [];
 }
 
+Utils.inherit(Author, ContentData);
+
 /**
  *
  * @returns {Buffer}
  */
 Author.prototype.serialize = function() {
-    let bufferHex = DataUtils.serializeNumber(this.version);
-    bufferHex += DataUtils.serializeNumber(this.type);
+    let bufferHex = Utils.serializeNumber(this.version);
+    bufferHex += Utils.serializeNumber(this.type);
     bufferHex += creativecoin.address.fromBase58Check(this.address).hash.toString('hex');
 
-    bufferHex += DataUtils.serializeText(this.nick);
-    bufferHex += DataUtils.serializeText(this.email);
-    bufferHex += DataUtils.serializeText(this.web);
-    bufferHex += DataUtils.serializeText(this.description);
-    bufferHex += DataUtils.serializeText(this.avatar);
+    bufferHex += Utils.serializeText(this.nick);
+    bufferHex += Utils.serializeText(this.email);
+    bufferHex += Utils.serializeText(this.web);
+    bufferHex += Utils.serializeText(this.description);
+    bufferHex += Utils.serializeText(this.avatar);
     let tags = JSON.stringify(this.tags);
-    bufferHex += DataUtils.serializeText(tags);
+    bufferHex += Utils.serializeText(tags);
 
 
     return Buffer.from(bufferHex, 'hex');
@@ -217,27 +221,27 @@ Author.prototype.deserialize = function(buffer, offset) {
     this.address = creativecoin.address.toBase58Check(this.address, ContentData.NETWORK.pubKeyHash);
     offset += 20;
 
-    let desNick = DataUtils.deserializeText(buffer, offset);
+    let desNick = Utils.deserializeText(buffer, offset);
     this.nick = desNick.text;
     offset += desNick.offset;
 
-    let desEmail = DataUtils.deserializeText(buffer, offset);
+    let desEmail = Utils.deserializeText(buffer, offset);
     this.email = desEmail.text;
     offset += desEmail.offset;
 
-    let desWeb = DataUtils.deserializeText(buffer, offset);
+    let desWeb = Utils.deserializeText(buffer, offset);
     this.web = desWeb.text;
     offset += desWeb.offset;
 
-    let desDesc = DataUtils.deserializeText(buffer, offset);
+    let desDesc = Utils.deserializeText(buffer, offset);
     this.description = desDesc.text;
     offset += desDesc.offset;
 
-    let desAva = DataUtils.deserializeText(buffer, offset);
+    let desAva = Utils.deserializeText(buffer, offset);
     this.avatar = desAva.text;
     offset += desAva.offset;
 
-    let desTags = DataUtils.deserializeText(buffer, offset);
+    let desTags = Utils.deserializeText(buffer, offset);
     this.tags = JSON.parse(desTags.text);
     offset += desTags.offset;
     return offset;
@@ -276,28 +280,30 @@ function MediaData(title, description, contentType, license, userAddress, conten
     this.privateFileSize = privateFileSize ? privateFileSize : 0;
 }
 
+Utils.inherit(MediaData, ContentData);
+
 /**
  *
  * @returns {Buffer}
  */
 MediaData.prototype.serialize = function() {
-    let bufferHex = DataUtils.serializeNumber(this.version);
-    bufferHex += DataUtils.serializeNumber(this.type);
+    let bufferHex = Utils.serializeNumber(this.version);
+    bufferHex += Utils.serializeNumber(this.type);
     bufferHex += creativecoin.address.fromBase58Check(this.userAddress).hash.toString('hex');
     bufferHex += creativecoin.address.fromBase58Check(this.contentAddress).hash.toString('hex');
-    bufferHex += DataUtils.serializeNumber(this.license);
-    bufferHex += DataUtils.serializeText(this.title);
-    bufferHex += DataUtils.serializeText(this.description);
-    bufferHex += DataUtils.serializeText(this.contentType);
+    bufferHex += Utils.serializeNumber(this.license);
+    bufferHex += Utils.serializeText(this.title);
+    bufferHex += Utils.serializeText(this.description);
+    bufferHex += Utils.serializeText(this.contentType);
     let tags = JSON.stringify(this.tags);
-    bufferHex += DataUtils.serializeText(tags);
-    bufferHex += DataUtils.serializeNumber(this.price, 8);
-    bufferHex += DataUtils.serializeText(this.publicContent);
-    bufferHex += DataUtils.serializeText(this.privateContent);
+    bufferHex += Utils.serializeText(tags);
+    bufferHex += Utils.serializeNumber(this.price, 8);
+    bufferHex += Utils.serializeText(this.publicContent);
+    bufferHex += Utils.serializeText(this.privateContent);
 
     bufferHex += this.hash;
-    bufferHex += DataUtils.serializeNumber(this.publicFileSize, 4);
-    bufferHex += DataUtils.serializeNumber(this.privateFileSize, 4);
+    bufferHex += Utils.serializeNumber(this.publicFileSize, 4);
+    bufferHex += Utils.serializeNumber(this.privateFileSize, 4);
 
     return Buffer.from(bufferHex, 'hex');
 };
@@ -321,30 +327,30 @@ MediaData.prototype.deserialize = function(buffer, offset) {
     this.license = buffer[offset];
     offset += 1;
 
-    let desTitle = DataUtils.deserializeText(buffer, offset);
+    let desTitle = Utils.deserializeText(buffer, offset);
     this.title = desTitle.text;
     offset += desTitle.offset;
 
-    let desComment = DataUtils.deserializeText(buffer, offset);
+    let desComment = Utils.deserializeText(buffer, offset);
     this.description = desComment.text;
     offset += desComment.offset;
 
-    let destContentType = DataUtils.deserializeText(buffer, offset);
+    let destContentType = Utils.deserializeText(buffer, offset);
     this.contentType = destContentType.text;
     offset += destContentType.offset;
 
-    let desTags = DataUtils.deserializeText(buffer, offset);
+    let desTags = Utils.deserializeText(buffer, offset);
     this.tags = JSON.parse(desTags.text);
     offset += desTags.offset;
 
     this.price = parseInt(buffer.slice(offset, offset + 8).toString('hex'), 16);
     offset += 8;
 
-    let publicContent = DataUtils.deserializeText(buffer, offset);
+    let publicContent = Utils.deserializeText(buffer, offset);
     this.publicContent = publicContent.text;
     offset += publicContent.offset;
 
-    let privateContent = DataUtils.deserializeText(buffer, offset);
+    let privateContent = Utils.deserializeText(buffer, offset);
     this.privateContent = privateContent.text;
     offset += privateContent.offset;
 
@@ -371,13 +377,16 @@ function Like(author, contentAddress) {
     this.contentAddress = contentAddress;
 }
 
+
+Utils.inherit(Like, ContentData);
+
 /**
  *
  * @returns {Buffer}
  */
 Like.prototype.serialize = function() {
-    let bufferHex = DataUtils.serializeNumber(this.version);
-    bufferHex += DataUtils.serializeNumber(this.type);
+    let bufferHex = Utils.serializeNumber(this.version);
+    bufferHex += Utils.serializeNumber(this.type);
     bufferHex += creativecoin.address.fromBase58Check(this.author).hash.toString('hex');
     bufferHex += creativecoin.address.fromBase58Check(this.contentAddress).hash.toString('hex');
     return Buffer.from(bufferHex, 'hex');
@@ -412,13 +421,15 @@ function Unlike(author, contentAddress) {
     this.contentAddress = contentAddress;
 }
 
+Utils.inherit(Unlike, ContentData);
+
 /**
  *
  * @returns {Buffer}
  */
 Unlike.prototype.serialize = function() {
-    let bufferHex = DataUtils.serializeNumber(this.version);
-    bufferHex += DataUtils.serializeNumber(this.type);
+    let bufferHex = Utils.serializeNumber(this.version);
+    bufferHex += Utils.serializeNumber(this.type);
     bufferHex += creativecoin.address.fromBase58Check(this.author).hash.toString('hex');
     bufferHex += creativecoin.address.fromBase58Check(this.contentAddress).hash.toString('hex');
     return Buffer.from(bufferHex, 'hex');
@@ -454,6 +465,8 @@ function Payment(author, contentAddress, amount) {
     this.contentAddress = contentAddress;
     this.amount = amount;
 }
+
+Utils.inherit(Payment, ContentData);
 
 /**
  *
@@ -502,6 +515,8 @@ function Comment(author, contentAddress, comment) {
     this.comment = comment;
 }
 
+Utils.inherit(Comment, ContentData);
+
 /**
  *
  * @returns {Buffer}
@@ -546,6 +561,8 @@ function Donation(author) {
     this.author = author;
 }
 
+Utils.inherit(Donation, ContentData);
+
 /**
  *
  * @returns {Buffer}
@@ -583,6 +600,9 @@ function AddressRelation(type, activeAddress, pasiveAddress) {
     this.followerAddress = activeAddress;
     this.followedAddress = pasiveAddress;
 }
+
+
+Utils.inherit(AddressRelation, ContentData);
 
 /**
  *
@@ -623,6 +643,8 @@ function Follow(followerAddress, followedAddress) {
     AddressRelation.call(this, Constants.TYPE.FOLLOW, followerAddress, followedAddress);
 }
 
+Utils.inherit(Follow, AddressRelation);
+
 /**
  *
  * @param {string} followerAddress
@@ -632,6 +654,8 @@ function Unfollow(followerAddress, followedAddress) {
     AddressRelation.call(this, Constants.TYPE.UNFOLLOW, followerAddress, followedAddress);
 }
 
+Utils.inherit(Unfollow, AddressRelation);
+
 /**
  *
  * @param {string} followerAddress
@@ -640,6 +664,8 @@ function Unfollow(followerAddress, followedAddress) {
 function BlockContent(followerAddress, followedAddress) {
     AddressRelation.call(this, Constants.TYPE.BLOCK, followerAddress, followedAddress);
 }
+
+Utils.inherit(BlockContent, AddressRelation);
 
 if (module) {
     module.exports = {
