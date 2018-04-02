@@ -1,6 +1,6 @@
 {
   "name": "trantor-js",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Creativechain Trantor Lib for JS",
   "main": "index.js",
   "scripts": {
