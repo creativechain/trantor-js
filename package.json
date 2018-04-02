@@ -27,7 +27,9 @@
   },
   "homepage": "https://github.com/creativechain/trantor-js#readme",
   "dependencies": {
+    "bitcoinjs-lib": "^3.3.2",
     "lzma": "^2.3.2",
+    "safe-buffer": "^5.1.1",
     "varint": "^5.0.0"
   }
 }

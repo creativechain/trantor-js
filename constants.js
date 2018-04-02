@@ -1,5 +1,5 @@
 
-let Content = {
+let Constants = {
     MAGIC_BYTE_TESTNET: 0xB8,
     MAGIC_BYTE: 0x51,
     VERSION: 0x0100, //Content version
@@ -30,4 +30,8 @@ let Content = {
     }
 };
 
-module.exports = {Content};
+if (module) {
+    module.exports = {
+        Constants: Constants
+    };
+}
