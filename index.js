@@ -1,7 +1,12 @@
 
+let {Constants} = require('./constants');
+let {TrantorNetwork} = require('./network');
+let {DataUtils} = require('./data-utils');
+let {Content} = require('./content');
+
 module.exports = {
-    Constants: require('./constants'),
-    TrantorNetwork: require('./network'),
-    DataUtils: require('./data-utils'),
-    Content: require('./content')
+    Constants: Constants,
+    TrantorNetwork: TrantorNetwork,
+    DataUtils: DataUtils,
+    Content: Content
 };
