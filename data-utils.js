@@ -34,7 +34,7 @@ DataUtils.serializeNumber = function (number, length) {
  */
 DataUtils.serializeText = function(text) {
     if (text && text.length > 0) {
-        let textHex = String.hexEncode(text);
+        let textHex = Buffer.from(text, 'utf8').toString('hex');
         let textBuffer = Buffer.from(textHex, 'hex');
 
         return Buffer.from(varint.encode(textBuffer.length)).toString('hex') + textHex;
@@ -55,7 +55,7 @@ DataUtils.deserializeText = function(buffer, offset) {
     let textHex = buffer.slice(offset, offset + varInt).toString('hex');
 
     return {
-        text: String.hexDecode(textHex),
+        text: Buffer.from(textHex, 'hex').toString('utf8'),
         offset: varInt + varint.decode.bytes,
         offset2: offset + varInt
     }
