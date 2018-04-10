@@ -45,3 +45,4 @@ console.log(author); //Must be a Author Object
 
     You should have received a copy of the GNU General Public License
     along with Trantor-JS.  If not, see <http://www.gnu.org/licenses/gpl.html>.
+```

@@ -62,7 +62,7 @@ Utils.deserializeText = function(buffer, offset) {
 };
 
 Utils.inherit = function(child, parent) {
-    child.prototype = Object.create(parent.prototype, )
+    child.prototype = Object.create(parent.prototype);
 };
 
 if (module) {
