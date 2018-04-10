@@ -1,6 +1,6 @@
 
 let {Constants} = require('./constants');
-let {Utils} = require('./utils');
+let {TrantorTrantorUtils} = require('./utils');
 let {TrantorNetwork} = require('./network');
 let Buffer = require('safe-buffer').Buffer;
 let varint = require('varint');
@@ -122,11 +122,11 @@ function Index(txIds) {
     this.txIds = txIds;
 }
 
-Utils.inherit(Index, ContentData);
+TrantorUtils.inherit(Index, ContentData);
 
 Index.prototype.serialize = function() {
-    let bufferHex = Utils.serializeNumber(this.version);
-    bufferHex += Utils.serializeNumber(this.type);
+    let bufferHex = TrantorUtils.serializeNumber(this.version);
+    bufferHex += TrantorUtils.serializeNumber(this.type);
 
     bufferHex += Buffer.from(varint.encode(this.txIds.length)).toString('hex');
 
@@ -185,24 +185,24 @@ function Author(address, nick, email, web, description, avatar, tags) {
     this.tags = tags ? tags : [];
 }
 
-Utils.inherit(Author, ContentData);
+TrantorUtils.inherit(Author, ContentData);
 
 /**
  *
  * @returns {Buffer}
  */
 Author.prototype.serialize = function() {
-    let bufferHex = Utils.serializeNumber(this.version);
-    bufferHex += Utils.serializeNumber(this.type);
+    let bufferHex = TrantorUtils.serializeNumber(this.version);
+    bufferHex += TrantorUtils.serializeNumber(this.type);
     bufferHex += creativecoin.address.fromBase58Check(this.address).hash.toString('hex');
 
-    bufferHex += Utils.serializeText(this.nick);
-    bufferHex += Utils.serializeText(this.email);
-    bufferHex += Utils.serializeText(this.web);
-    bufferHex += Utils.serializeText(this.description);
-    bufferHex += Utils.serializeText(this.avatar);
+    bufferHex += TrantorUtils.serializeText(this.nick);
+    bufferHex += TrantorUtils.serializeText(this.email);
+    bufferHex += TrantorUtils.serializeText(this.web);
+    bufferHex += TrantorUtils.serializeText(this.description);
+    bufferHex += TrantorUtils.serializeText(this.avatar);
     let tags = JSON.stringify(this.tags);
-    bufferHex += Utils.serializeText(tags);
+    bufferHex += TrantorUtils.serializeText(tags);
 
 
     return Buffer.from(bufferHex, 'hex');
@@ -221,27 +221,27 @@ Author.prototype.deserialize = function(buffer, offset) {
     this.address = creativecoin.address.toBase58Check(this.address, ContentData.NETWORK.pubKeyHash);
     offset += 20;
 
-    let desNick = Utils.deserializeText(buffer, offset);
+    let desNick = TrantorUtils.deserializeText(buffer, offset);
     this.nick = desNick.text;
     offset += desNick.offset;
 
-    let desEmail = Utils.deserializeText(buffer, offset);
+    let desEmail = TrantorUtils.deserializeText(buffer, offset);
     this.email = desEmail.text;
     offset += desEmail.offset;
 
-    let desWeb = Utils.deserializeText(buffer, offset);
+    let desWeb = TrantorUtils.deserializeText(buffer, offset);
     this.web = desWeb.text;
     offset += desWeb.offset;
 
-    let desDesc = Utils.deserializeText(buffer, offset);
+    let desDesc = TrantorUtils.deserializeText(buffer, offset);
     this.description = desDesc.text;
     offset += desDesc.offset;
 
-    let desAva = Utils.deserializeText(buffer, offset);
+    let desAva = TrantorUtils.deserializeText(buffer, offset);
     this.avatar = desAva.text;
     offset += desAva.offset;
 
-    let desTags = Utils.deserializeText(buffer, offset);
+    let desTags = TrantorUtils.deserializeText(buffer, offset);
     this.tags = JSON.parse(desTags.text);
     offset += desTags.offset;
     return offset;
@@ -280,30 +280,30 @@ function MediaData(title, description, contentType, license, userAddress, conten
     this.privateFileSize = privateFileSize ? privateFileSize : 0;
 }
 
-Utils.inherit(MediaData, ContentData);
+TrantorUtils.inherit(MediaData, ContentData);
 
 /**
  *
  * @returns {Buffer}
  */
 MediaData.prototype.serialize = function() {
-    let bufferHex = Utils.serializeNumber(this.version);
-    bufferHex += Utils.serializeNumber(this.type);
+    let bufferHex = TrantorUtils.serializeNumber(this.version);
+    bufferHex += TrantorUtils.serializeNumber(this.type);
     bufferHex += creativecoin.address.fromBase58Check(this.userAddress).hash.toString('hex');
     bufferHex += creativecoin.address.fromBase58Check(this.contentAddress).hash.toString('hex');
-    bufferHex += Utils.serializeNumber(this.license);
-    bufferHex += Utils.serializeText(this.title);
-    bufferHex += Utils.serializeText(this.description);
-    bufferHex += Utils.serializeText(this.contentType);
+    bufferHex += TrantorUtils.serializeNumber(this.license);
+    bufferHex += TrantorUtils.serializeText(this.title);
+    bufferHex += TrantorUtils.serializeText(this.description);
+    bufferHex += TrantorUtils.serializeText(this.contentType);
     let tags = JSON.stringify(this.tags);
-    bufferHex += Utils.serializeText(tags);
-    bufferHex += Utils.serializeNumber(this.price, 8);
-    bufferHex += Utils.serializeText(this.publicContent);
-    bufferHex += Utils.serializeText(this.privateContent);
+    bufferHex += TrantorUtils.serializeText(tags);
+    bufferHex += TrantorUtils.serializeNumber(this.price, 8);
+    bufferHex += TrantorUtils.serializeText(this.publicContent);
+    bufferHex += TrantorUtils.serializeText(this.privateContent);
 
     bufferHex += this.hash;
-    bufferHex += Utils.serializeNumber(this.publicFileSize, 4);
-    bufferHex += Utils.serializeNumber(this.privateFileSize, 4);
+    bufferHex += TrantorUtils.serializeNumber(this.publicFileSize, 4);
+    bufferHex += TrantorUtils.serializeNumber(this.privateFileSize, 4);
 
     return Buffer.from(bufferHex, 'hex');
 };
@@ -327,30 +327,30 @@ MediaData.prototype.deserialize = function(buffer, offset) {
     this.license = buffer[offset];
     offset += 1;
 
-    let desTitle = Utils.deserializeText(buffer, offset);
+    let desTitle = TrantorUtils.deserializeText(buffer, offset);
     this.title = desTitle.text;
     offset += desTitle.offset;
 
-    let desComment = Utils.deserializeText(buffer, offset);
+    let desComment = TrantorUtils.deserializeText(buffer, offset);
     this.description = desComment.text;
     offset += desComment.offset;
 
-    let destContentType = Utils.deserializeText(buffer, offset);
+    let destContentType = TrantorUtils.deserializeText(buffer, offset);
     this.contentType = destContentType.text;
     offset += destContentType.offset;
 
-    let desTags = Utils.deserializeText(buffer, offset);
+    let desTags = TrantorUtils.deserializeText(buffer, offset);
     this.tags = JSON.parse(desTags.text);
     offset += desTags.offset;
 
     this.price = parseInt(buffer.slice(offset, offset + 8).toString('hex'), 16);
     offset += 8;
 
-    let publicContent = Utils.deserializeText(buffer, offset);
+    let publicContent = TrantorUtils.deserializeText(buffer, offset);
     this.publicContent = publicContent.text;
     offset += publicContent.offset;
 
-    let privateContent = Utils.deserializeText(buffer, offset);
+    let privateContent = TrantorUtils.deserializeText(buffer, offset);
     this.privateContent = privateContent.text;
     offset += privateContent.offset;
 
@@ -378,15 +378,15 @@ function Like(author, contentAddress) {
 }
 
 
-Utils.inherit(Like, ContentData);
+TrantorUtils.inherit(Like, ContentData);
 
 /**
  *
  * @returns {Buffer}
  */
 Like.prototype.serialize = function() {
-    let bufferHex = Utils.serializeNumber(this.version);
-    bufferHex += Utils.serializeNumber(this.type);
+    let bufferHex = TrantorUtils.serializeNumber(this.version);
+    bufferHex += TrantorUtils.serializeNumber(this.type);
     bufferHex += creativecoin.address.fromBase58Check(this.author).hash.toString('hex');
     bufferHex += creativecoin.address.fromBase58Check(this.contentAddress).hash.toString('hex');
     return Buffer.from(bufferHex, 'hex');
@@ -421,15 +421,15 @@ function Unlike(author, contentAddress) {
     this.contentAddress = contentAddress;
 }
 
-Utils.inherit(Unlike, ContentData);
+TrantorUtils.inherit(Unlike, ContentData);
 
 /**
  *
  * @returns {Buffer}
  */
 Unlike.prototype.serialize = function() {
-    let bufferHex = Utils.serializeNumber(this.version);
-    bufferHex += Utils.serializeNumber(this.type);
+    let bufferHex = TrantorUtils.serializeNumber(this.version);
+    bufferHex += TrantorUtils.serializeNumber(this.type);
     bufferHex += creativecoin.address.fromBase58Check(this.author).hash.toString('hex');
     bufferHex += creativecoin.address.fromBase58Check(this.contentAddress).hash.toString('hex');
     return Buffer.from(bufferHex, 'hex');
@@ -466,7 +466,7 @@ function Payment(author, contentAddress, amount) {
     this.amount = amount;
 }
 
-Utils.inherit(Payment, ContentData);
+TrantorUtils.inherit(Payment, ContentData);
 
 /**
  *
@@ -515,7 +515,7 @@ function Comment(author, contentAddress, comment) {
     this.comment = comment;
 }
 
-Utils.inherit(Comment, ContentData);
+TrantorUtils.inherit(Comment, ContentData);
 
 /**
  *
@@ -561,7 +561,7 @@ function Donation(author) {
     this.author = author;
 }
 
-Utils.inherit(Donation, ContentData);
+TrantorUtils.inherit(Donation, ContentData);
 
 /**
  *
@@ -602,7 +602,7 @@ function AddressRelation(type, activeAddress, pasiveAddress) {
 }
 
 
-Utils.inherit(AddressRelation, ContentData);
+TrantorUtils.inherit(AddressRelation, ContentData);
 
 /**
  *
@@ -643,7 +643,7 @@ function Follow(followerAddress, followedAddress) {
     AddressRelation.call(this, Constants.TYPE.FOLLOW, followerAddress, followedAddress);
 }
 
-Utils.inherit(Follow, AddressRelation);
+TrantorUtils.inherit(Follow, AddressRelation);
 
 /**
  *
@@ -654,7 +654,7 @@ function Unfollow(followerAddress, followedAddress) {
     AddressRelation.call(this, Constants.TYPE.UNFOLLOW, followerAddress, followedAddress);
 }
 
-Utils.inherit(Unfollow, AddressRelation);
+TrantorUtils.inherit(Unfollow, AddressRelation);
 
 /**
  *
@@ -665,7 +665,7 @@ function BlockContent(followerAddress, followedAddress) {
     AddressRelation.call(this, Constants.TYPE.BLOCK, followerAddress, followedAddress);
 }
 
-Utils.inherit(BlockContent, AddressRelation);
+TrantorUtils.inherit(BlockContent, AddressRelation);
 
 if (module) {
     module.exports = {
