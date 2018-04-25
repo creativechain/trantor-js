@@ -1,6 +1,6 @@
 
 let {Constants} = require('./constants');
-let {TrantorTrantorUtils} = require('./utils');
+let {TrantorUtils} = require('./utils');
 let {TrantorNetwork} = require('./network');
 let Buffer = require('safe-buffer').Buffer;
 let varint = require('varint');
