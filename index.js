@@ -2,11 +2,10 @@
 let {Constants} = require('./constants');
 let {TrantorNetwork} = require('./network');
 let {TrantorUtils} = require('./utils');
-let Content = require('./content');
+let {ContentData, Index, Author, MediaData, Like, Unlike, Payment, Comment, Donation, AddressRelation, Follow,
+    Unfollow, BlockContent} = require('./content');
 
 module.exports = {
-    Constants: Constants,
-    TrantorNetwork: TrantorNetwork,
-    TrantorUtils: TrantorUtils,
-    Content: Content
+    Constants, TrantorNetwork, TrantorUtils, ContentData, Index, Author, MediaData, Like, Unlike, Payment, Comment,
+    Donation, AddressRelation, Follow, Unfollow, BlockContent
 };

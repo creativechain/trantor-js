@@ -669,19 +669,8 @@ TrantorUtils.inherit(BlockContent, AddressRelation);
 
 if (module) {
     module.exports = {
-        ContentData: ContentData,
-        Index: Index,
-        Author: Author,
-        MediaData: MediaData,
-        Like: Like,
-        Unlike: Unlike,
-        Payment: Payment,
-        Comment: Comment,
-        Donation: Donation,
-        AddressRelation: AddressRelation,
-        Follow: Follow,
-        Unfollow: Unfollow,
-        BlockContent: BlockContent
+        ContentData, Index, Author, MediaData, Like, Unlike, Payment, Comment, Donation, AddressRelation, Follow,
+        Unfollow, BlockContent
     }
 }
 

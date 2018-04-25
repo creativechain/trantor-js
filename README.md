@@ -7,7 +7,7 @@ npm install trantor-js
 
 #### Serialization of data
 ```js
-let {Author} = require("trantor-js").Content
+let {Author} = require("trantor-js")
 
 //Serialize author data
 let author = new Author('CSoY2vaLcZXRhgMsDGq86V9J9n3rVLhYAE', 'nick', 'email@example.com', 'example.com', 'description', '/IPFS/CID', ['tags']);
@@ -20,8 +20,7 @@ console.log(bufferData.toString('hex'));
 
 #### Deserialization
 ```js
-let {Content} = require("trantor-js");
-let {Author, ContentData} = Content;
+let {Author, ContentData} = require("trantor-js");
 
 let bufferData = Buffer.from('01000271686f1f3c14aa547b824091445ab99fabc56928046e69636b11656d61696c406578616d706c652e636f6d0b6578616d706c652e636f6d0b6465736372697074696f6e092f495046532f434944085b2274616773225d', 'hex');
 
