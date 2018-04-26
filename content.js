@@ -473,11 +473,11 @@ TrantorUtils.inherit(Payment, ContentData);
  * @returns {Buffer}
  */
 Payment.prototype.serialize = function() {
-    let bufferHex = ContentData.serializeNumber(this.version);
-    bufferHex += ContentData.serializeNumber(this.type);
+    let bufferHex = TrantorUtils.serializeNumber(this.version);
+    bufferHex += TrantorUtils.serializeNumber(this.type);
     bufferHex += creativecoin.address.fromBase58Check(this.author).hash.toString('hex');
     bufferHex += creativecoin.address.fromBase58Check(this.contentAddress).hash.toString('hex');
-    bufferHex += ContentData.serializeNumber(this.amount, 8);
+    bufferHex += TrantorUtils.serializeNumber(this.amount, 8);
     return Buffer.from(bufferHex, 'hex');
 };
 
@@ -522,11 +522,11 @@ TrantorUtils.inherit(Comment, ContentData);
  * @returns {Buffer}
  */
 Comment.prototype.serialize = function() {
-    let bufferHex = ContentData.serializeNumber(this.version);
-    bufferHex += ContentData.serializeNumber(this.type);
+    let bufferHex = TrantorUtils.serializeNumber(this.version);
+    bufferHex += TrantorUtils.serializeNumber(this.type);
     bufferHex += creativecoin.address.fromBase58Check(this.author).hash.toString('hex');
     bufferHex += creativecoin.address.fromBase58Check(this.contentAddress).hash.toString('hex');
-    bufferHex += ContentData.serializeText(this.comment);
+    bufferHex += TrantorUtils.serializeText(this.comment);
     return Buffer.from(bufferHex, 'hex');
 };
 
@@ -568,8 +568,8 @@ TrantorUtils.inherit(Donation, ContentData);
  * @returns {Buffer}
  */
 Donation.prototype.serialize = function() {
-    let bufferHex = ContentData.serializeNumber(this.version);
-    bufferHex += ContentData.serializeNumber(this.type);
+    let bufferHex = TrantorUtils.serializeNumber(this.version);
+    bufferHex += TrantorUtils.serializeNumber(this.type);
     bufferHex += creativecoin.address.fromBase58Check(this.author).hash.toString('hex');
     return Buffer.from(bufferHex, 'hex');
 };
@@ -609,8 +609,8 @@ TrantorUtils.inherit(AddressRelation, ContentData);
  * @returns {Buffer}
  */
 AddressRelation.prototype.serialize = function() {
-    let bufferHex = ContentData.serializeNumber(this.version);
-    bufferHex += ContentData.serializeNumber(this.type);
+    let bufferHex = TrantorUtils.serializeNumber(this.version);
+    bufferHex += TrantorUtils.serializeNumber(this.type);
     bufferHex += creativecoin.address.fromBase58Check(this.followerAddress).hash.toString('hex');
     bufferHex += creativecoin.address.fromBase58Check(this.followedAddress).hash.toString('hex');
     return Buffer.from(bufferHex, 'hex');
