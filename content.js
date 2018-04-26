@@ -546,7 +546,7 @@ Comment.prototype.deserialize = function(buffer, offset) {
     this.contentAddress =  creativecoin.address.toBase58Check(this.contentAddress, ContentData.NETWORK.pubKeyHash);
     offset += 20;
 
-    let desComment = ContentData.deserializeText(buffer, offset);
+    let desComment = TrantorUtils.deserializeText(buffer, offset);
     this.comment = desComment.text;
     offset += desComment.offset;
     return offset;
