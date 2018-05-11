@@ -94,6 +94,9 @@ ContentData.deserialize = function(data) {
         case Constants.TYPE.BLOCK:
             contentData = new BlockContent();
             break;
+        case Constants.TYPE.UNBLOCK:
+            contentData = new UnblockContent();
+            break;
         case Constants.TYPE.INDEX:
             contentData = new Index();
             break;
