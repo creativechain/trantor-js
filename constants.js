@@ -16,6 +16,7 @@ let Constants = {
         UNLIKE: 0x09,
         PAYMENT: 0x10,
         BLOCK: 0x11,
+        UNBLOCK: 0x12,
         OTHER: 0xFF,
     },
     LICENSE: {

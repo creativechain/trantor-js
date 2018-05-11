@@ -658,11 +658,20 @@ TrantorUtils.inherit(Unfollow, AddressRelation);
 
 /**
  *
- * @param {string} followerAddress
- * @param {string} followedAddress
+ * @param {string} blockerAddress
+ * @param {string} blockedAddress
  */
-function BlockContent(followerAddress, followedAddress) {
-    AddressRelation.call(this, Constants.TYPE.BLOCK, followerAddress, followedAddress);
+function BlockContent(blockerAddress, blockedAddress) {
+    AddressRelation.call(this, Constants.TYPE.BLOCK, blockerAddress, blockedAddress);
+}
+
+/**
+ *
+ * @param {string} blockerAddress
+ * @param {string} blockedAddress
+ */
+function UnblockContent(blockerAddress, blockedAddress) {
+    AddressRelation.call(this, Constants.TYPE.UNBLOCK, blockerAddress, blockedAddress);
 }
 
 TrantorUtils.inherit(BlockContent, AddressRelation);
@@ -670,7 +679,7 @@ TrantorUtils.inherit(BlockContent, AddressRelation);
 if (module) {
     module.exports = {
         ContentData, Index, Author, MediaData, Like, Unlike, Payment, Comment, Donation, AddressRelation, Follow,
-        Unfollow, BlockContent
+        Unfollow, BlockContent, UnblockContent
     }
 }
 
