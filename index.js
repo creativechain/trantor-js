@@ -1,4 +1,3 @@
-
 let {Constants} = require('./constants');
 let {TrantorNetwork} = require('./network');
 let {TrantorUtils} = require('./utils');
