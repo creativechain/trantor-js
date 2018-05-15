@@ -668,6 +668,8 @@ function BlockContent(blockerAddress, blockedAddress) {
     AddressRelation.call(this, Constants.TYPE.BLOCK, blockerAddress, blockedAddress);
 }
 
+TrantorUtils.inherit(BlockContent, AddressRelation);
+
 /**
  *
  * @param {string} blockerAddress
@@ -677,7 +679,7 @@ function UnblockContent(blockerAddress, blockedAddress) {
     AddressRelation.call(this, Constants.TYPE.UNBLOCK, blockerAddress, blockedAddress);
 }
 
-TrantorUtils.inherit(BlockContent, AddressRelation);
+TrantorUtils.inherit(UnblockContent, AddressRelation);
 
 if (module) {
     module.exports = {
